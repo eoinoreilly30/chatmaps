@@ -1,1 +1,1 @@
-# chat-maps
+# Chat Maps
