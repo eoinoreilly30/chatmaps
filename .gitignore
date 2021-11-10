@@ -6,6 +6,7 @@ devSSL
 
 .firebaserc
 firebase.json
+.firebase
 
 # local env files
 .env.local
