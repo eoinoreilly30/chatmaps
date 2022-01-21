@@ -7,6 +7,8 @@ docker run --name peerjs -it -v ~/chat-maps/devSSL:/ssl -p 9000:9000 peerjs/peer
 ```
 
 #### Production
+In systemd file
 ```
-docker run --name peerjs -it -v ~/ssl:/ssl -p 9000:9000 peerjs/peerjs-server --port 9000 --allow_discovery --sslkey /ssl/privkey.pem --sslcert /ssl/fullchain.pem
+ExecStartPre=/usr/bin/cp /etc/letsencrypt/live/chatmaps-api.0x30.in/privkey.pem /etc/letsencrypt/live/chatmaps-api.0x30.in/fullchain.pem /var/lib/chatmaps
+ExecStart=/usr/bin/docker run --name peerjs -v /var/lib/chatmaps:/ssl -p 9000:9000 peerjs/peerjs-server --port 9000 --allow_discovery --sslkey /ssl/privkey.pem --sslcert /ssl/fullchain.pem
 ```
