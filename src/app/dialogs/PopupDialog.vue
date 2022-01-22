@@ -12,7 +12,7 @@
         {{ popupDialog.text }}
       </v-card-text>
       <v-card-actions>
-        <v-spacer></v-spacer>
+        <v-spacer />
         <v-btn text color="success" @click="status = false">
           Ok
         </v-btn>

@@ -10,8 +10,7 @@
         Welcome!
       </v-card-title>
       <v-card-text class="justify-center text-center">
-        ChatMaps is the revolutionary state of the art decentralized peer to
-        peer chatting app!
+        Look for the purple dots to find online users, click on them to call.
       </v-card-text>
       <v-card-actions>
         <v-spacer />

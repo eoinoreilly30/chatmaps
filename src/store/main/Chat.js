@@ -3,12 +3,13 @@ import axios from "axios";
 import store from "@/store";
 
 let myPeer = null;
+let mediaConnection = null;
+let mediaStream = null;
 
-async function receiveCallStream(stream) {
+async function playAudio(stream) {
   let audio = document.createElement("audio");
   audio.srcObject = stream;
   audio.onloadedmetadata = () => {
-    console.log("call received");
     audio.play();
   };
 }
@@ -25,7 +26,6 @@ async function getMediaStream() {
       text:
         "Please enable microphone access. You might have to go into your settings"
     });
-    console.log("error");
   }
 }
 
@@ -64,32 +64,45 @@ const actions = {
       }, 2000);
     });
 
-    myPeer.on("call", incomingCallConnection => {
+    myPeer.on("call", connection => {
       commit("receiveDialog", true);
-      console.log("received call");
-      getMediaStream().then(mediaStream => {
-        incomingCallConnection.answer(mediaStream);
-      });
-
-      incomingCallConnection.on("stream", stream => {
-        receiveCallStream(stream);
-      });
+      commit("receiveLoading", true);
+      mediaConnection = connection;
+    });
+  },
+  async answerCall({ commit }) {
+    getMediaStream().then(stream => {
+      mediaStream = stream;
+      mediaConnection.answer(stream);
+    });
+    mediaConnection.on("stream", stream => {
+      playAudio(stream);
+      commit("receiveLoading", false);
     });
   },
   async connectCall({ commit }, id) {
     commit("callDialog", true);
     commit("callLoading", true);
-    getMediaStream().then(mediaStream => {
-      console.log("connect", mediaStream);
-      myPeer.call(id, mediaStream).on("stream", stream => {
-        console.log("connecting");
-        receiveCallStream(stream);
+    getMediaStream().then(stream => {
+      mediaStream = stream;
+      mediaConnection = myPeer.call(id, stream);
+      mediaConnection.on("stream", connectionStream => {
+        playAudio(connectionStream);
         commit("callLoading", false);
       });
     });
   },
+  async hangup({ commit }) {
+    mediaConnection.close();
+    mediaStream.getTracks().forEach(track => {
+      track.stop();
+    });
+    commit("callDialog", false);
+    commit("receiveDialog", false);
+  },
   async destroy() {
     myPeer.destroy();
+    mediaConnection.close();
   },
   async getPeers({ commit }) {
     let { data } = await axios.get(
@@ -114,6 +127,9 @@ const mutations = {
   },
   receiveDialog(state, receiveDialog) {
     state.receiveDialog = receiveDialog;
+  },
+  receiveLoading(state, receiveLoading) {
+    state.receiveLoading = receiveLoading;
   }
 };
 

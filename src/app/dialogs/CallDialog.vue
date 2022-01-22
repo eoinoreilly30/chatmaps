@@ -11,13 +11,13 @@
       </v-card-title>
       <v-card-text class="text-center text-body-1">
         <v-btn x-large icon loading v-if="callLoading" />
-        <span v-else>You are talking to ...</span>
+        <span v-else>Say hello!</span>
       </v-card-text>
       <v-card-actions>
         <v-spacer />
         <v-tooltip top>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn icon color="red" v-on="on" v-bind="attrs">
+            <v-btn icon color="red" v-on="on" v-bind="attrs" @click="hangup">
               <v-icon>mdi-phone-hangup</v-icon>
             </v-btn>
           </template>
@@ -29,12 +29,15 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "CallDialog",
   computed: {
     ...mapGetters(["callDialog", "callLoading"])
+  },
+  methods: {
+    ...mapActions(["hangup"])
   }
 };
 </script>

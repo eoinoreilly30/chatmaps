@@ -20,9 +20,9 @@ export default {
       let lat = this.position.coords.latitude;
       let long = this.position.coords.longitude;
       // eslint-disable-next-line
-      this.map.setView([lat, long], 6);
+      this.map.setView([lat, long], 7);
       // eslint-disable-next-line
-      L.marker([lat, long]).addTo(this.map).bindTooltip("This you!", { direction: "top" });
+      L.marker([lat, long]).addTo(this.map).bindTooltip("This is you!", { direction: "top" });
     },
     peers() {
       this.peers.map(peerId => {
