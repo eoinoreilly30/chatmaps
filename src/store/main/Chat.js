@@ -31,6 +31,7 @@ async function getMediaStream() {
 
 const state = {
   myId: "",
+  apiError: false,
   peers: [],
   callDialog: false,
   callLoading: false,
@@ -40,6 +41,7 @@ const state = {
 
 const getters = {
   myId: state => state.myId,
+  apiError: state => state.apiError,
   peers: state => state.peers,
   callDialog: state => state.callDialog,
   callLoading: state => state.callLoading,
@@ -55,6 +57,10 @@ const actions = {
       host: process.env.VUE_APP_PEER_SERVER,
       port: 9000,
       secure: true
+    });
+
+    myPeer.on("error", () => {
+      commit("apiError", true);
     });
 
     myPeer.on("open", id => {
@@ -105,16 +111,24 @@ const actions = {
     mediaConnection.close();
   },
   async getPeers({ commit }) {
-    let { data } = await axios.get(
-      `https://${process.env.VUE_APP_PEER_SERVER}:9000/peerjs/peers`
-    );
-    commit("peers", data);
+    try {
+      let { data } = await axios.get(
+        `https://${process.env.VUE_APP_PEER_SERVER}:9000/peerjs/peers`
+      );
+      commit("peers", data);
+      commit("apiError", false);
+    } catch {
+      commit("apiError", true);
+    }
   }
 };
 
 const mutations = {
   myId(state, myId) {
     state.myId = myId;
+  },
+  apiError(state, apiError) {
+    state.apiError = apiError;
   },
   peers(state, peers) {
     state.peers = peers.filter(id => id !== state.myId);

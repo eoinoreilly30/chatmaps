@@ -4,11 +4,16 @@
     <call-dialog />
     <receive-dialog />
     <map-view />
-    <v-toolbar
-      v-if="myId"
-      style="position: absolute; top: 0; right: 0; z-index: 1000"
-      height="40px"
+    <v-snackbar
+      content-class="text-center font-weight-bold"
+      top
+      :value="apiError"
+      color="red"
+      timeout="-1"
     >
+      Error connecting to peer server
+    </v-snackbar>
+    <v-toolbar v-if="myId" class="top-right" height="40px">
       <div style="display: flex; align-items: center">
         <v-icon small class="mr-2" :color="peers.length > 0 ? 'green' : 'grey'">
           mdi-checkbox-blank-circle
@@ -30,9 +35,16 @@ export default {
   name: "Home",
   components: { ReceiveDialog, CallDialog, WelcomeDialog, MapView },
   computed: {
-    ...mapGetters(["myId", "peers"])
+    ...mapGetters(["myId", "peers", "apiError"])
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.top-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+}
+</style>
