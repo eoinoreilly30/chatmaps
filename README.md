@@ -1,14 +1,15 @@
 ## Chat Maps
-Go to [chatmaps.art](https://chatmaps.art) to check it out!
+ChatMaps is a peer to peer voice calling app. It uses [PeerJS](https://peerjs.com/) for voice calling between 
+users and VueJS as the frontend framework. Users appear as purple dots on the map, click on them to call them.
+
+Go to [chatmaps.0x30.in](https://chatmaps.0x30.in) to check it out!
 
 #### Development
+Run peer server
 ```
 docker run --name peerjs -it -v ~/chat-maps/devSSL:/ssl -p 9000:9000 peerjs/peerjs-server --port 9000 --allow_discovery --sslkey /ssl/localhost.key --sslcert /ssl/localhost.crt
 ```
-
-#### Production
-In systemd file
+Serve app
 ```
-ExecStartPre=/usr/bin/cp /etc/letsencrypt/live/chatmaps-api.0x30.in/privkey.pem /etc/letsencrypt/live/chatmaps-api.0x30.in/fullchain.pem /var/lib/chatmaps
-ExecStart=/usr/bin/docker run --name peerjs -v /var/lib/chatmaps:/ssl -p 9000:9000 peerjs/peerjs-server --port 9000 --allow_discovery --sslkey /ssl/privkey.pem --sslcert /ssl/fullchain.pem
+npm run serve
 ```

@@ -6,7 +6,7 @@ let myPeer = null;
 let mediaConnection = null;
 let mediaStream = null;
 
-async function playAudio(stream) {
+function playAudio(stream) {
   let audio = document.createElement("audio");
   audio.srcObject = stream;
   audio.onloadedmetadata = () => {
