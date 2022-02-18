@@ -24,6 +24,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import { addJitterToCoord } from "@/plugins/functions";
 
 export default {
   name: "WelcomeDialog",
@@ -43,11 +44,10 @@ export default {
       this.dialog = false;
       navigator.geolocation.getCurrentPosition(
         position => {
-          this.$store.commit("position", position);
-          this.$store.dispatch("connectPeerServer", [
-            position.coords.latitude,
-            position.coords.longitude
-          ]);
+          let lat = addJitterToCoord(position.coords.latitude);
+          let long = addJitterToCoord(position.coords.longitude);
+          this.$store.commit("position", { lat: lat, long: long });
+          this.$store.dispatch("connectPeerServer", [lat, long]);
         },
         () => {
           this.popupDialog({

@@ -12,13 +12,15 @@
       timeout="-1"
     >
       Error connecting to peer server
+      <br />
+      (refresh to try again)
     </v-snackbar>
     <v-toolbar v-if="myId" class="top-right" height="40px">
       <div style="display: flex; align-items: center">
         <v-icon small class="mr-2" :color="peers.length > 0 ? 'green' : 'grey'">
           mdi-checkbox-blank-circle
         </v-icon>
-        {{ peers.length }}
+        {{ peers.length }} other
         {{ peers.length === 1 ? "user" : "users" }} online
       </div>
     </v-toolbar>

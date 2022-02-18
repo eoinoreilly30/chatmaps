@@ -1,6 +1,7 @@
 import Peer from "peerjs";
 import axios from "axios";
 import store from "@/store";
+import { peerIdToLatLong } from "@/plugins/functions";
 
 let myPeer = null;
 let mediaConnection = null;
@@ -131,7 +132,17 @@ const mutations = {
     state.apiError = apiError;
   },
   peers(state, peers) {
-    state.peers = peers.filter(id => id !== state.myId);
+    peers = peers.map(id => {
+      let [lat, long] = peerIdToLatLong(id);
+      return {
+        id: id,
+        lat: lat,
+        long: long
+      };
+    });
+
+    peers = peers.filter(peer => peer.id !== state.myId);
+    state.peers = peers;
   },
   callDialog(state, callDialog) {
     state.callDialog = callDialog;

@@ -1,21 +1,16 @@
-function spaceOutPoints() {
-    
+export function peerIdToLatLong(peerId) {
+  return peerId
+    .substr(1)
+    .slice(0, -1)
+    .replaceAll("p", ".")
+    .split("x");
 }
 
-function getDistanceBetweenPointsInKm(lat1, lon1, lat2, lon2) {
-  let R = 6371; // Radius of the earth in km
-  let dLat = deg2rad(lat2 - lat1);
-  let dLon = deg2rad(lon2 - lon1);
-  let a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(deg2rad(lat1)) *
-      Math.cos(deg2rad(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
-  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c;
-}
-
-function deg2rad(deg) {
-  return deg * (Math.PI / 180);
+export function addJitterToCoord(coord) {
+  let max = 0.001;
+  let min = 0.00001;
+  let seedrandom = require("seedrandom");
+  let rng = seedrandom();
+  let random = rng() * (max - min) + min;
+  return (coord += random);
 }

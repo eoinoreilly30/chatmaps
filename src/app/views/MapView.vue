@@ -17,34 +17,28 @@ export default {
   },
   watch: {
     position() {
-      let lat = this.position.coords.latitude;
-      let long = this.position.coords.longitude;
+      let lat = this.position.lat;
+      let long = this.position.long;
       // eslint-disable-next-line
-      this.map.setView([lat, long], 7);
+      this.map.setView([lat, long], 8);
       // eslint-disable-next-line
       L.marker([lat, long]).addTo(this.map).bindTooltip("This is you!", { direction: "top" });
     },
     peers() {
-      this.peers.map(peerId => {
-        let [lat, long] = peerId
-          .substr(1)
-          .slice(0, -1)
-          .replaceAll("p", ".")
-          .split("x");
-
+      this.peers.map(peer => {
         // eslint-disable-next-line
         let peerMarker = L
-            .circleMarker([lat, long], {
+            .circleMarker([peer.lat, peer.long], {
           color: "black",
           fillColor: "#ff00ff",
           weight: 1,
           fillOpacity: 1,
           radius: 12,
-          id: peerId
+          id: peer.id
         }).addTo(this.map);
 
         peerMarker.on("click", () => {
-          this.connectCall(peerId);
+          this.connectCall(peer.id);
         });
 
         peerMarker.bindTooltip("Click to call", { direction: "top" });
