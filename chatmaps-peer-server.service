@@ -3,7 +3,12 @@ Description=Chatmaps
 
 [Service]
 ExecStartPre=/usr/bin/cp /etc/letsencrypt/live/api.0x30.in/privkey.pem /etc/letsencrypt/live/api.0x30.in/fullchain.pem /var/lib/api-ssl
-ExecStart=/usr/bin/docker run --name peerjs -v /var/lib/api-ssl:/ssl -p 9000:9000 peerjs/peerjs-server --port 9000 --allow_discovery --sslkey /ssl/privkey.pem --sslcert /ssl/fullchain.pem
+ExecStart=/usr/bin/docker run --name chatmaps-peer-server -v /var/lib/api-ssl:/ssl -p 9000:9000 peerjs/peerjs-server --port 9000 --allow_discovery --sslkey /ssl/privkey.pem --sslcert /ssl/fullchain.pem
+ExecStop=/usr/bin/docker stop chatmaps-peer-server
+ExecStopPost=/usr/bin/docker rm chatmaps-peer-server
+
+Restart=on-failure
+RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target
