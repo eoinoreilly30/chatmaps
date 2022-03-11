@@ -21,7 +21,7 @@
           mdi-checkbox-blank-circle
         </v-icon>
         {{ peers.length }} other
-        {{ peers.length === 1 ? "user" : "users" }} online
+        {{ peers.length === 1 ? "user" : "users" }}
       </div>
     </v-toolbar>
   </div>
