@@ -56,7 +56,7 @@ const actions = {
 
     myPeer = new Peer(myId, {
       host: process.env.VUE_APP_PEER_SERVER,
-      port: 9000,
+      port: process.env.VUE_APP_PEER_SERVER_PORT,
       secure: true
     });
 
@@ -114,7 +114,7 @@ const actions = {
   async getPeers({ commit }) {
     try {
       let { data } = await axios.get(
-        `https://${process.env.VUE_APP_PEER_SERVER}:9000/peerjs/peers`
+        `https://${process.env.VUE_APP_PEER_SERVER}:${process.env.VUE_APP_PEER_SERVER_PORT}/peerjs/peers`
       );
       commit("peers", data);
       commit("apiError", false);
