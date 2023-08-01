@@ -2,7 +2,7 @@
 ChatMaps is a peer to peer voice calling app. It uses [PeerJS](https://peerjs.com/) for voice calling between 
 users and VueJS as the frontend framework. Users appear as purple dots on the map, click on them to call them.
 
-Go to [chatmaps.0x30.in](https://chatmaps.0x30.in) to check it out!
+Go to [chat-maps-b5abd.web.app](https://chat-maps-b5abd.web.app/) to check it out!
 
 #### Development
 Run peer server
