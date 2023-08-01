@@ -16,13 +16,13 @@ Vue.use(VueAxios, axios);
 Vue.use(VueRouter);
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCSq-PtGMnD4TAiSyPwcSPzBTK8ZomIs_k",
-  authDomain: "chat-maps-b5abd.firebaseapp.com",
-  projectId: "chat-maps-b5abd",
-  storageBucket: "chat-maps-b5abd.appspot.com",
-  messagingSenderId: "841386432156",
-  appId: "1:841386432156:web:19a0a9cd56c2b7af837f59",
-  measurementId: "G-MGDBER07EM"
+  apiKey: "AIzaSyAVQ8Jo7qJxMM2IMz1kOwFvuDIYHQL4Cow",
+  authDomain: "chatmaps-75d1d.firebaseapp.com",
+  projectId: "chatmaps-75d1d",
+  storageBucket: "chatmaps-75d1d.appspot.com",
+  messagingSenderId: "564044826136",
+  appId: "1:564044826136:web:625295191ac0d27368a56d",
+  measurementId: "G-8DWQGDH5H8"
 };
 
 const app = initializeApp(firebaseConfig);

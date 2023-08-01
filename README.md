@@ -1,5 +1,5 @@
 ## Chat Maps
-[chat-maps-b5abd.web.app](https://chat-maps-b5abd.web.app/)
+[chatmaps-75d1d.web.app](https://chatmaps-75d1d.web.app)
 
 A peer to peer voice calling app.  
 Uses [PeerJS](https://peerjs.com/) for voice calling between users and VueJS as the frontend framework.  
